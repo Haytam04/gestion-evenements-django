@@ -11,3 +11,4 @@ class EvenementAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'date', 'lieu', 'statue', 'category')
     list_filter = ('date', 'category', 'statue')
     search_fields = ('name', 'description', 'lieu')
+#testing pull

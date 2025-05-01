@@ -11,12 +11,10 @@ from django.db import models
 
 class Evenement(models.Model):
     STATUE_CHOICES = (
-        ('draft', 'Draft'),               
-        ('published', 'Published'),       
+        ('draft', 'Draft'),                    
         ('cancelled', 'Cancelled'),       
-        ('postponed', 'Postponed'),       
-        ('completed', 'Completed'),       
-        ('archived', 'Archived'), 
+        ('onhold', 'OnHold'),       
+        ('confirmed', 'Confiremed'),       
     )
     name = models.CharField(max_length=255)
     description = models.TextField()
@@ -39,3 +37,4 @@ class Evenement(models.Model):
 
     def __str__(self):
         return self.name
+#test moatassim

@@ -76,12 +76,12 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'evenment',
-        'USER':'root',
-        'PASSWORD':'',
-        'HOST':'127.0.0.2',
-        'PORT':'3307',
+        'ENGINE': 'django.db.backends.mysql',  # Use MySQL engine
+        'NAME': 'events',           # Your database name from phpMyAdmin
+        'USER': 'root',                         # Default user for XAMPP
+        'PASSWORD': 'Tomioka2024',                         # Default is empty password
+        'HOST': 'localhost',                    # Localhost
+        'PORT': '3300',                        # MySQL default port
     }
 }
 

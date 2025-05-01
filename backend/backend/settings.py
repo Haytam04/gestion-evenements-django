@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-pes9i9nwexpr#t^@rf(vz#p8rll&(uwyz=j2ojmuksy-k#ap95'
+SECRET_KEY = 'django-insecure-=ej5p%n!g6v0$wkvz^12sk(_q%s-t34s2mi63aubs-%78gc3x#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'evenment',
+    'base',
 ]
 
 MIDDLEWARE = [
@@ -74,12 +76,12 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',  # Use MySQL engine
-        'NAME': 'events',           # Your database name from phpMyAdmin
-        'USER': 'root',                         # Default user for XAMPP
-        'PASSWORD': 'Tomioka2024',                         # Default is empty password
-        'HOST': 'localhost',                    # Localhost
-        'PORT': '3300',                         # MySQL default port
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'evenment',
+        'USER':'root',
+        'PASSWORD':'',
+        'HOST':'127.0.0.2',
+        'PORT':'3307',
     }
 }
 
@@ -119,6 +121,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_URL= '/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

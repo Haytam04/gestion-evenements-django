@@ -81,7 +81,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',  # Use MySQL engine
         'NAME': 'events',           # Your database name from phpMyAdmin
         'USER': 'root',                         # Default user for XAMPP
-        'PASSWORD': 'alphasigma123',                         # Default is empty password
+        'PASSWORD': 'Tomioka2024',                         # Default is empty password
         'HOST': 'localhost',                    # Localhost
         'PORT': '3300',                        # MySQL default port
     }

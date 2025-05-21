@@ -72,8 +72,7 @@ class creationView(View):
             
             category = Category.objects.get(id=category_id)
 
-            
-            
+
 
             
             evenement = Evenement.objects.create(

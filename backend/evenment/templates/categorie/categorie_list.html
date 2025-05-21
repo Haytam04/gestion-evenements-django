@@ -9,35 +9,20 @@
 </head>
 
 <div class="container my-5">
-  <h1>No categorie/h1>
+  <h1>Nos categorie</h1>
   {% bootstrap_messages %}
   <div class="row">
     {% for category in categorie %}
      <div class="col-md-4 col-lg-4 col-xl-3 py-3">
     <div class="card bg-light my-3 p-3 rounded" style="height: 100%;">
-      <a href="{% url 'categoriel' category.pk %}">
-        {% if category.image %}
-          <img src="{{ category.image.url }}" class="card-img-top" alt="Image for {{ category.name }}">
-        {% else %}
-          <img src="https://via.placeholder.com/400x200?text=Category" class="card-img-top" alt="No image available for {{ category.name }}">
-        {% endif %}
-      </a>
+      
       <div class="card-body d-flex flex-column">
         <div class="card-title" style="min-height: 40px;">
           <a href="{% url 'categoriel' category.pk %}">
             <strong>{{ category.name }}</strong>
           </a>
         </div>
-        <div class="card-text flex-grow-1">
-          {% if category.description %}
-            <p>{{ category.description|truncatechars:100 }}</p>
-          {% else %}
-            <p>No description available.</p>
-          {% endif %}
-          {% if category.events.count %}
-            <p>{{ category.events.count }} Events</p>
-          {% endif %}
-        </div>
+         
         <div class="mt-auto">
           <a href="{% url 'categoriel' category.pk %}" class="btn btn-outline-primary btn-sm">View Events</a>
         </div>

@@ -1,3 +1,4 @@
+{% with user_role=1 %}
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -29,11 +30,13 @@
           <a class="nav-link" href="{% url 'categorie_list' %}">categorie</a>
         </li>
       </ul>
-        <ul class="navbar-nav"> {# New ul for right-aligned items #}
-         <li class="nav-item">
-          <a class="nav-link" href="{% url 'cree' %}">cree un evenment</a>
+ {% if user_role == 1 %}
+    <ul class="navbar-nav"> {# New ul for right-aligned items #}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'cree' %}">Créer un évènement</a>
         </li>
-      </ul>
+    </ul>
+{% endif %}
     </div>
   </div>
 </nav>    
@@ -47,3 +50,4 @@
     {% block extra_js %}{% endblock %}
 </body>
 </html>
+{% endwith %}

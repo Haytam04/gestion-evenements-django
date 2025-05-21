@@ -1,0 +1,87 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg">
+                <div class="card-header bg-gradient-primary text-white">
+                    <h2 class="h4 mb-0">Create New Event</h2>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="{% url 'creation' %}" >
+                        {% csrf_token %}
+                        
+                        <div class="mb-4">
+                            <label class="form-label">Event Name</label>
+                            <input type="text" class="form-control" name="name" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Category</label>
+                            <select class="form-select" name="category" required>
+                                {% for category in categories %}
+                                <option value="{{ category.id }}">{{ category.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label">Date & Time</label>
+                                <input type="datetime-local" class="form-control" name="date" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Location</label>
+                                <input type="text" class="form-control" name="lieu" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label">Available Places</label>
+                                <input type="number" class="form-control" name="nombre_places" min="1" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Status</label>
+                                <select class="form-select" name="statue" required>
+                                    <option value="draft">Draft</option>
+                                    <option value="confirmed" selected>Confirmed</option>
+                                    <option value="onhold">On Hold</option>
+                                    <option value="cancelled">Cancelled</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Event Image</label>
+                            <input type="file" class="form-control" name="image" accept="image/*">
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" name="description" rows="4" required></textarea>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="submit" class="btn btn-primary px-4">Create Event</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+function validatePlaces(input) {
+    if (input.value > 300) {
+        input.setCustomValidity('Maximum 300 places allowed');
+        input.reportValidity();
+        input.value = 300;
+    } else {
+        input.setCustomValidity('');
+    }
+}
+</script>
+{% endblock %}

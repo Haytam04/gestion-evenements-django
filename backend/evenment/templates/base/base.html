@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    {% load django_bootstrap5 %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    {% bootstrap_css %}
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'evenment' %}">Navbar</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarColor01">
+      <ul class="navbar-nav me-auto"> {# Existing items on the left. `me-auto` pushes the next content to the right. #}
+        <li class="nav-item">
+          <a class="nav-link active" href="#">Home
+            <span class="visually-hidden">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'evenment' %}">evenment</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'categorie_list' %}">categorie</a>
+        </li>
+      </ul>
+        <ul class="navbar-nav"> {# New ul for right-aligned items #}
+         <li class="nav-item">
+          <a class="nav-link" href="{% url 'cree' %}">cree un evenment</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>    
+    <main class="container my-4">
+        {% bootstrap_messages %}
+        {% block content %}
+                {% endblock %}
+    </main>
+
+          {% bootstrap_javascript %}
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

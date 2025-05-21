@@ -1,0 +1,82 @@
+{% extends 'base/base.html' %}
+{% load django_bootstrap5 %}
+
+{% block title %}{{ evenment.name }}{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <!-- evenment Image -->
+        <div class="col-md-6 mb-4">
+            <img src="{{ evenment.image.url }}" class="img-fluid rounded shadow" alt="{{ evenment.name }}" style="max-height: 500px; width: 100%; object-fit: cover;">
+        </div>
+        
+        <!-- evenment Details -->
+        <div class="col-md-6">
+            <!-- Status Badge -->
+            <span class="badge 
+                {% if evenment.statue == 'confirmed' %}bg-success
+                {% elif evenment.statue == 'cancelled' %}bg-danger
+                {% elif evenment.statue == 'onhold' %}bg-warning
+                {% else %}bg-secondary{% endif %} mb-3">
+                {{ evenment.get_statue_display }}
+            </span>
+            
+            <h1 class="mb-3 fw-bold">{{ evenment.name }}</h1>
+            
+            <!-- Category -->
+            {% if evenment.category %}
+            <p class="text-muted">
+                <i class="bi bi-tag-fill"></i> Catégorie : {{ evenment.category }}
+            </p>
+            {% endif %}
+            
+            <!-- Date and Time -->
+            <div class="d-flex align-items-center mb-3">
+                <i class="bi bi-calendar-evenment me-2 fs-5 text-primary"></i>
+                <div>
+                    <h5 class="mb-0">{{ evenment.date|date:"l j F Y"|title }}</h5>
+                    <p class="mb-0 text-muted">À {{ evenment.date|time:"H:i" }}</p>
+                </div>
+            </div>
+            
+            <!-- Location -->
+            <div class="d-flex align-items-center mb-3">
+                <i class="bi bi-geo-alt-fill me-2 fs-5 text-primary"></i>
+                <h5 class="mb-0">Lieu : {{ evenment.lieu }}</h5>
+            </div>
+            
+            <!-- Available Places -->
+            <div class="d-flex align-items-center mb-4">
+                <i class="bi bi-ticket-perforated me-2 fs-5 text-primary"></i>
+                <h5 class="mb-0">{{ evenment.nombre_places }} places disponibles</h5>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="d-grid gap-2 d-md-flex mb-5">
+                {% if evenment.statue == 'confirmed' and evenment.nombre_places != 300 %}
+                <form method="post" action="{% url 'reservation' evenment.id %}">
+                    {% csrf_token %} 
+                    <button class="btn btn-outline-primary btn-lg">
+                        <i class="bi bi-arrow-left"></i> reserver
+                    </button>
+                </form>
+                {% endif %}
+                <a href="{% url 'evenment' %}" class="btn btn-outline-secondary btn-lg">
+                    <i class="bi bi-arrow-left"></i> Retour aux événements
+                </a>
+            </div>
+        </div>
+    </div>
+    
+     
+    <div class="row mt-4">
+        <div class="col-12">
+            <h3 class="mb-3 border-bottom pb-2">Description</h3>
+            <div class="card p-4 bg-light">
+                <p class="mb-0 fs-5">{{ evenment.description|linebreaks }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

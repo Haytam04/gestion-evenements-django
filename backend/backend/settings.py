@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'evenment',
+    'django_bootstrap5',
     'reservation',
     'users',
     'base',
@@ -77,13 +78,13 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',  # Use MySQL engine
-        'NAME': 'events',           # Your database name from phpMyAdmin
-        'USER': 'root',                         # Default user for XAMPP
-        'PASSWORD': 'Tomioka2024',                         # Default is empty password
-        'HOST': 'localhost',                    # Localhost
-        'PORT': '3300',                        # MySQL default port
+   'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'evenment',
+        'USER':'root',
+        'PASSWORD':'',
+        'HOST':'127.0.0.2',
+        'PORT':'3307',
     }
 }
 
@@ -123,6 +124,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS=[
+    BASE_DIR / 'static'
+]
 
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 MEDIA_URL= '/media/'

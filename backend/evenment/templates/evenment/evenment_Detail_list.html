@@ -8,8 +8,13 @@
     <div class="row">
         <!-- evenment Image -->
         <div class="col-md-6 mb-4">
-            <img src="{{ evenment.image.url }}" class="img-fluid rounded shadow" alt="{{ evenment.name }}" style="max-height: 500px; width: 100%; object-fit: cover;">
+{% if event.image and event.image.url %}
+        <img src="{{ event.image.url }}" class="card-img-top" alt="{{ event.name }}" style="height: 180px; object-fit: cover;">
+      {% else %}
+        <div class="card-img-top d-flex align-items-center justify-content-center bg-secondary" style="height: 180px;">
+          <span class="text-white">No Image Available</span>
         </div>
+      {% endif %}        </div>
         
         <!-- evenment Details -->
         <div class="col-md-6">
@@ -54,13 +59,24 @@
             
             <!-- Action Buttons -->
             <div class="d-grid gap-2 d-md-flex mb-5">
-                {% if evenment.statue == 'confirmed' and evenment.nombre_places != 300 %}
+                {% if evenment.statue == 'confirmed' and evenment.nombre_places != 1000 %}
                 <form method="post" action="{% url 'reservation' evenment.id %}">
                     {% csrf_token %} 
                     <button class="btn btn-outline-primary btn-lg">
                         <i class="bi bi-arrow-left"></i> reserver
                     </button>
                 </form>
+                {% endif %}
+                {% if user_role == 1 %}
+                    <a href="{% url 'edit' evenment.id %}" class="btn btn-outline-success btn-lg">
+                    <i class="bi bi-arrow-left"></i> modifier
+                    </a>
+                    <form method="post" action="{% url 'supprimer' evenment.id %}">
+                    {% csrf_token %} 
+                    <button class="btn btn-outline-danger btn-lg">
+                        <i class="bi bi-arrow-left"></i> supprimer
+                    </button>
+                    </form>
                 {% endif %}
                 <a href="{% url 'evenment' %}" class="btn btn-outline-secondary btn-lg">
                     <i class="bi bi-arrow-left"></i> Retour aux événements

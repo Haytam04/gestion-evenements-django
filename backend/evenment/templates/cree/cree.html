@@ -7,22 +7,28 @@
         <div class="col-lg-8">
             <div class="card shadow-lg">
                 <div class="card-header bg-gradient-primary text-white">
-                    <h2 class="h4 mb-0">Create New Event</h2>
+                    <h2 class="h4 mb-0">
+                        {% if event %}Edit Event{% else %}Create New Event{% endif %}
+                    </h2>
                 </div>
                 <div class="card-body">
-                    <form method="post" action="{% url 'creation' %}" >
+                    <form method="post" enctype="multipart/form-data" action="{% if event %}{% url 'edit' event.id %}{% else %}{% url 'creation' %}{% endif %}">
                         {% csrf_token %}
                         
                         <div class="mb-4">
                             <label class="form-label">Event Name</label>
-                            <input type="text" class="form-control" name="name" required>
+                            <input type="text" class="form-control" name="name" 
+                                   value="{{ event.name|default:'' }}" required>
                         </div>
 
                         <div class="mb-4">
                             <label class="form-label">Category</label>
                             <select class="form-select" name="category" required>
                                 {% for category in categories %}
-                                <option value="{{ category.id }}">{{ category.name }}</option>
+                                <option value="{{ category.id }}"
+                                        {% if event and event.category.id == category.id %}selected{% endif %}>
+                                    {{ category.name }}
+                                </option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -30,26 +36,30 @@
                         <div class="row mb-4">
                             <div class="col-md-6">
                                 <label class="form-label">Date & Time</label>
-                                <input type="datetime-local" class="form-control" name="date" required>
+                                <input type="datetime-local" class="form-control" name="date" 
+                                       value="{{ event.date|date:'Y-m-d\TH:i'|default:'' }}" required>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Location</label>
-                                <input type="text" class="form-control" name="lieu" required>
+                                <input type="text" class="form-control" name="lieu" 
+                                       value="{{ event.lieu|default:'' }}" required>
                             </div>
                         </div>
 
                         <div class="row mb-4">
                             <div class="col-md-6">
                                 <label class="form-label">Available Places</label>
-                                <input type="number" class="form-control" name="nombre_places" min="1" required>
+                                <input type="number" class="form-control" name="nombre_places" min="1" 
+                                       value="{{ event.nombre_places|default:'50' }}" required
+                                       oninput="validatePlaces(this)">
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Status</label>
                                 <select class="form-select" name="statue" required>
-                                    <option value="draft">Draft</option>
-                                    <option value="confirmed" selected>Confirmed</option>
-                                    <option value="onhold">On Hold</option>
-                                    <option value="cancelled">Cancelled</option>
+                                    <option value="draft" {% if event and event.statue == 'draft' %}selected{% endif %}>Draft</option>
+                                    <option value="confirmed" {% if not event or event.statue == 'confirmed' %}selected{% endif %}>Confirmed</option>
+                                    <option value="onhold" {% if event and event.statue == 'onhold' %}selected{% endif %}>On Hold</option>
+                                    <option value="cancelled" {% if event and event.statue == 'cancelled' %}selected{% endif %}>Cancelled</option>
                                 </select>
                             </div>
                         </div>
@@ -57,16 +67,26 @@
                         <div class="mb-4">
                             <label class="form-label">Event Image</label>
                             <input type="file" class="form-control" name="image" accept="image/*">
+                            {% if event and event.image %}
+                                <small class="text-muted mt-2 d-block">
+                                    Current image: <a href="{{ event.image.url }}" target="_blank">View</a>
+                                    <input type="hidden" name="existing_image" value="{{ event.image.name }}">
+                                </small>
+                            {% endif %}
                         </div>
 
                         <div class="mb-4">
                             <label class="form-label">Description</label>
-                            <textarea class="form-control" name="description" rows="4" required></textarea>
+                            <textarea class="form-control" name="description" rows="4" required>{{ event.description|default:'' }}</textarea>
                         </div>
 
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <button type="submit" class="btn btn-primary px-4">Create Event</button>
+                            <button type="submit" class="btn btn-primary px-4">
+                                {% if event %}Update Event{% else %}Create Event{% endif %}
+                            </button>
+                                <a class="btn btn-outline-danger" href="{% url 'evenment' %}">Retour</a>
                         </div>
+
                     </form>
                 </div>
             </div>

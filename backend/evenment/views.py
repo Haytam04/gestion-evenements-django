@@ -4,7 +4,8 @@ from .models import Evenement
 from .models import Category
 from django.views.generic import ListView,DetailView
 from django.contrib import messages
-
+from django.views.generic.edit import UpdateView
+from django.urls import reverse_lazy
 
 
 class EvenmentView(ListView):
@@ -59,14 +60,14 @@ class creationView(View):
         lieu = request.POST.get('lieu')
         date = request.POST.get('date')
         description = request.POST.get('description')
-        image = request.POST.get('image')  
+        image = request.FILES.get('image')  
 
         
         try:
             
             nombre_places = int(nombre_places)
-            if nombre_places > 300:
-                messages.error(request, "Maximum 300 places allowed")
+            if nombre_places > 1000:
+                messages.error(request, "Maximum 1000 places allowed")
                 return redirect('creation')
 
             
@@ -98,3 +99,37 @@ class creationView(View):
         except Exception as e:
             messages.error(request, f"Error creating event: {str(e)}")
             return redirect('cree')
+
+
+
+class editpageView(UpdateView):
+    
+    model = Evenement
+    template_name = 'cree/cree.html'
+    fields = ['name', 'category', 'date', 'lieu', 'nombre_places', 'statue', 'image', 'description']
+    success_url = reverse_lazy('evenment') 
+#retour
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        #dictiomaire
+        context['categories'] = Category.objects.all()
+        context['event'] = self.object  
+        return context
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()
+        context['event'] = self.object  # Make the event available in template as 'event'
+        return context
+
+
+def delete_item(request, pk):
+    item = get_object_or_404(Evenement, id=pk)
+    if request.method == 'POST':
+        item.delete()
+        return redirect('evenment')  
+    return redirect('evenment')  
+
+
+
+
